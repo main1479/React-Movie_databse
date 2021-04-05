@@ -16,7 +16,7 @@ class Movies extends Component {
 		);
 		return (
 			<React.Fragment>
-				<h2 className="heading-2 mb-3 mt-3">Showing {this.state.movies.length} from the Database</h2>
+				<h2 className="heading-2 mb-3 mt-3">Showing {this.state.movies.length} movies from the Database</h2>
 				<table className="table">
 					<thead>
 						<tr>
