@@ -5,56 +5,51 @@ class Movies extends Component {
 	state = {
 		movies: getMovies(),
 	};
+	deleteMovie(movie) {
+		const newState = this.state.movies.filter((m) => movie._id !== m._id);
+		this.setState({ movies: newState });
+	}
 	render() {
+		const {length: moviesLength} = this.state.movies
+		if(moviesLength === 0) return (
+			<h2 className="heading-2 mb-3 mt-3">There are no movies in database</h2>
+		);
 		return (
-			<div className="mt-5">
-				<h2 className="heading-2">
-					There is {this.state.movies.length === 0 ? 'no' : this.state.movies.length} Movies
-				</h2>
-
-				{this.state.movies.length === 0 ? (
-					''
-				) : (
-					<table className="table mt-5">
-						<thead>
-							<tr>
-								<th scope="col">Title</th>
-								<th scope="col">Genre</th>
-								<th scope="col">Stock</th>
-								<th scope="col">Rate</th>
-							</tr>
-						</thead>
-						<tbody>
-							{this.state.movies.map((movie) => {
-								return (
-									<tr key={movie._id}>
-										<th scope="row">{movie.title}</th>
-										<td>{movie.genre.name}</td>
-										<td>{movie.numberInStock}</td>
-										<td>{movie.dailyRentalRate}</td>
-										<td>
-											<button
-												data-id={movie._id}
-												onClick={() => this.deleteMovie(movie)}
-												className="btn btn-danger"
-											>
-												Delete
-											</button>
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				)}
-			</div>
+			<React.Fragment>
+				<h2 className="heading-2 mb-3 mt-3">Showing {this.state.movies.length} from the Database</h2>
+				<table className="table">
+					<thead>
+						<tr>
+							<th scope="col">Title</th>
+							<th scope="col">Genre</th>
+							<th scope="col">Stock</th>
+							<th scope="col">Rate</th>
+						</tr>
+					</thead>
+					<tbody>
+						{this.state.movies.map((movie) => {
+							return (
+								<tr key={movie._id}>
+									<th scope="row">{movie.title}</th>
+									<td>{movie.genre.name}</td>
+									<td>{movie.numberInStock}</td>
+									<td>{movie.dailyRentalRate}</td>
+									<td>
+										<button
+											onClick={() => this.deleteMovie(movie)}
+											className="btn btn-danger btn-sm"
+										>
+											Delete
+										</button>
+									</td>
+								</tr>
+							);
+						})}
+					</tbody>
+				</table>
+			</React.Fragment>
 		);
 	}
-
-	deleteMovie = (movie) => {
-		const movies = this.state.movies.filter((m) => m._id !== movie._id);
-		this.setState({ movies: movies });
-	};
 }
 
 export default Movies;
